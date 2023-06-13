@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>gopi</button>
+    <video id="hi" height="300px" width="400px" autoplay="true" controls="true"></video>
+</body>
+<script>
+    let video = document.getElementById('hi')
+    if(navigator.mediaDevices.getUserMedia){
+        navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(res=>{
+            video.srcObject= res
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
+</script>
+</html>
