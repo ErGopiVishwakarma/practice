@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chat application</title>
+    <script
+      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>this is chat application</h1>
+    <ul id="ul"></ul>
+    <form action="" id="form" style="display: flex; margin-top: 500px; width: 100%; position: absolute; left: 0; right: 0; bottom: 0;">
+        <input id="input" type="text" placeholder="write message" style="width:1235px; height: 70px; font-size: 20px;">
+        <input type="submit" value="send" style="width: 120px;">
+    </form>
+    <script>
+      const socket = io('http://localhost:5000/', {
+        transports: ['websocket'],
+      });
+      let form=document.getElementById('form')
+      let input=document.getElementById('input')
+      let message=document.getElementById('ul')
+
+      form.addEventListener('submit',(e)=>{
+        e.preventDefault()
+        if(input.value){
+            socket.emit('chat message',input.value)
+            input.value=""
+        }
+      })
+      socket.on('message',(msg)=>{
+        let li=document.createElement('li')
+        li.innerHTML=msg
+        message.appendChild(li)
+        window.scrollTo(0, document.body.scrollHeight);
+      })
+    </script>
+  </body>
+</html>
